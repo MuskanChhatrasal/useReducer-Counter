@@ -21,7 +21,7 @@ const WishlistProvider = ({ children }) => {
       default:
         break;
     }
-    return { ...state, counter: state.counter + action };
+    // return { ...state, counter: state.counter + action };
   };
 
   const [state, dispatch] = useReducer(reducer, {
