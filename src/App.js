@@ -1,36 +1,11 @@
 import "./styles.css";
-import { useReducer } from "react";
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "INCREMENT":
-      return { ...state, counter: state.counter + action.payload };
-    case "DECREMENT":
-      return { ...state, counter: state.counter - action.payload };
-    case "USER_VALUE":
-      return { ...state, user: action.payload };
-    case "ADD_USER":
-      return { ...state, wishlist: [...state.wishlist, state.user] };
-    case "DELETE_WISH":
-      return {
-        ...state,
-        wishlist: state.wishlist.filter((it) => it !== action.payload)
-      };
-    default:
-      break;
-  }
-  return { ...state, counter: state.counter + action };
-};
+import { useWishlist } from "./wishlist-context";
 
 export default function App() {
   // const [value, setValue] = useState([]);
   // const [user, setUser] = useState("");
 
-  const [state, dispatch] = useReducer(reducer, {
-    counter: 0,
-    user: "",
-    wishlist: []
-  });
+  const { state, dispatch } = useWishlist();
 
   return (
     <div className="App">
@@ -42,6 +17,14 @@ export default function App() {
         -
       </button>
 
+      {wishlistFunction(dispatch, state)}
+    </div>
+  );
+}
+
+function wishlistFunction(dispatch, state) {
+  return (
+    <div>
       <h2>Wishlist</h2>
       <label>
         Your Wish:
