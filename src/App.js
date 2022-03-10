@@ -11,6 +11,11 @@ const reducer = (state, action) => {
       return { ...state, user: action.payload };
     case "ADD_USER":
       return { ...state, wishlist: [...state.wishlist, state.user] };
+    case "DELETE_WISH":
+      return {
+        ...state,
+        wishlist: state.wishlist.filter((it) => it !== action.payload)
+      };
     default:
       break;
   }
@@ -48,8 +53,18 @@ export default function App() {
         ></input>
       </label>
       <button onClick={() => dispatch({ type: "ADD_USER" })}>Add</button>
-      {state.wishlist.map((val) => {
-        return <p key={val}>{val}</p>;
+      {state.wishlist.map((val, index) => {
+        return (
+          <div style={{ marginTop: "0.5rem" }} key={index}>
+            <span>{val}</span>
+            <button
+              style={{ marginLeft: "0.5rem" }}
+              onClick={() => dispatch({ type: "DELETE_WISH", payload: val })}
+            >
+              Delete
+            </button>
+          </div>
+        );
       })}
     </div>
   );
